@@ -1,0 +1,31 @@
+services:
+  oracle-db:
+    image: gvenzl/oracle-free
+    env_file: ./.env
+    container_name: oracle-db
+    ports:
+      - $ORACLEDB_LOCAL_PORT:$ORACLEDB_DOCKER_PORT
+    environment:
+      ORACLE_DATABASE: $ORACLEDB_DATABASE
+      ORACLE_PASSWORD: $ORACLEDB_ROOT_PASSWORD
+      APP_USER: $ORACLEDB_USER
+      APP_USER_PASSWORD: $ORACLEDB_ROOT_PASSWORD
+  backend:
+    restart:
+      unless-stopped
+    depends_on:
+      - oracle-db
+    build: ./backEnd
+    container_name: backEnd
+    env_file: ./.env
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+    environment:
+      SPRING_APPLICATION_JSON: |
+        {
+          "spring.datasource.url": "jdbc:oracle:thin:@oracle-db:$ORACLEDB_DOCKER_PORT/$ORACLEDB_DATABASE",
+          "spring.datasource.username": "$ORACLEDB_USER",
+          "spring.datasource.password": "$ORACLEDB_ROOT_PASSWORD"
+        }
+    stdin_open: true
+    tty: true
