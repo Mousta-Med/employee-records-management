@@ -19,7 +19,7 @@ public class Employee {
 
     @Id
     @GeneratedValue
-    private UUID employeeId;
+    private UUID id;
 
     @Column(nullable = false)
     private String fullName;
