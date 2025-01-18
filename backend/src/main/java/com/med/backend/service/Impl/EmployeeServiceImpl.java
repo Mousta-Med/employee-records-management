@@ -46,8 +46,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeRes save(EmployeeReq employeeReq) {
         Employee employee = modelMapper.map(employeeReq, Employee.class);
+        employee = employeeRepository.save(employee);
         setAuditLog("Save Employee", employee.getId());
-        return modelMapper.map(employeeRepository.save(employee), EmployeeRes.class);
+        return modelMapper.map(employee, EmployeeRes.class);
     }
 
     @Override

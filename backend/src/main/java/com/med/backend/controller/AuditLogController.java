@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(name = "/api/v1/log")
+@RequestMapping("/api/v1/log")
 public class AuditLogController {
 
     @Autowired

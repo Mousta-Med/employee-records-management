@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
