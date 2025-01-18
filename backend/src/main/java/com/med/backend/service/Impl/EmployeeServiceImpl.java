@@ -1,14 +1,18 @@
 package com.med.backend.service.Impl;
 
 import com.med.backend.exception.ResourceNotFoundException;
+import com.med.backend.model.entity.AuditLog;
 import com.med.backend.model.entity.Employee;
 import com.med.backend.model.request.EmployeeReq;
 import com.med.backend.model.response.EmployeeRes;
+import com.med.backend.repository.AuditLogRepository;
 import com.med.backend.repository.EmployeeRepository;
 import com.med.backend.service.EmployeeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,17 +23,31 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final ModelMapper modelMapper;
+    private final AuditLogRepository auditLogRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public EmployeeServiceImpl(ModelMapper modelMapper) {
+    public EmployeeServiceImpl(ModelMapper modelMapper, AuditLogRepository auditLogRepository) {
         this.modelMapper = modelMapper;
+        this.auditLogRepository = auditLogRepository;
     }
 
     @Override
+    public void setAuditLog(String action, UUID id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        AuditLog auditLog = new AuditLog();
+        auditLog.setEmployeeId(id);
+        auditLog.setAction(action);
+        auditLog.setModifiedBy(authentication.getName());
+        auditLogRepository.save(auditLog);
+    }
+
+
+    @Override
     public EmployeeRes save(EmployeeReq employeeReq) {
-        Employee Employee = modelMapper.map(employeeReq, Employee.class);
-        return modelMapper.map(employeeRepository.save(Employee), EmployeeRes.class);
+        Employee employee = modelMapper.map(employeeReq, Employee.class);
+        setAuditLog("Save Employee", employee.getId());
+        return modelMapper.map(employeeRepository.save(employee), EmployeeRes.class);
     }
 
     @Override
@@ -48,6 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee existingEmployee = employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee Not found with this: " + id));
         BeanUtils.copyProperties(employeeReq, existingEmployee);
         existingEmployee.setId(id);
+        setAuditLog("Update Employee", id);
         return modelMapper.map(employeeRepository.save(existingEmployee), EmployeeRes.class);
     }
 
@@ -55,6 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(UUID id) {
         employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee Not found with this: " + id));
         employeeRepository.deleteById(id);
+        setAuditLog("Delete Employee", id);
     }
 
 }

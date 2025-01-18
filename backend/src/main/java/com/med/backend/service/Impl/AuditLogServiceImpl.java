@@ -37,11 +37,10 @@ public class AuditLogServiceImpl implements AuditLogService {
 
     @Override
     public List<AuditLogRes> getLogsByEmployeeId(UUID employeeId) {
-//        return auditLogRepository.findAll().stream()
-//                .filter(log -> log.getEmployeeId().equals(employeeId))
-//                .map(AuditLog -> modelMapper.map(AuditLog, AuditLogRes.class))
-//                .collect(Collectors.toList());
-        return auditLogRepository.findAll().stream().map(AuditLog -> modelMapper.map(AuditLog, AuditLogRes.class)).collect(Collectors.toList());
+        return auditLogRepository.findAll().stream()
+                .filter(log -> log.getEmployeeId().equals(employeeId))
+                .map(AuditLog -> modelMapper.map(AuditLog, AuditLogRes.class))
+                .collect(Collectors.toList());
     }
 
     @Override

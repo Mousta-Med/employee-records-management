@@ -25,7 +25,7 @@ public class AuditLogReq {
     private String action;
 
     @NotNull(message = "modifiedBy Should Not Be Null")
-    private UUID modifiedBy;
+    private String modifiedBy;
 
     private LocalDateTime timestamp = LocalDateTime.now();
 }

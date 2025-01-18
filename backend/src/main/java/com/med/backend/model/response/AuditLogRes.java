@@ -14,8 +14,9 @@ import java.util.UUID;
 @NoArgsConstructor
 public class AuditLogRes {
 
+    private UUID id;
     private UUID employeeId;
     private String action;
-    private UUID modifiedBy;
+    private String modifiedBy;
     private LocalDateTime timestamp = LocalDateTime.now();
 }

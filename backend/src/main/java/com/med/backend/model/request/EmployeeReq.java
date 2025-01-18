@@ -17,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class EmployeeReq {
 
-    private UUID employeeId;
+    private UUID id;
 
     @NotBlank(message = "name should be not blank")
     private String fullName;

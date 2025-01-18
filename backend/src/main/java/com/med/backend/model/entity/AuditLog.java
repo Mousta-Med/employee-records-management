@@ -29,7 +29,7 @@ public class AuditLog {
     private String action;
 
     @Column(nullable = false)
-    private UUID modifiedBy;
+    private String modifiedBy;
 
     private LocalDateTime timestamp = LocalDateTime.now();
 }
