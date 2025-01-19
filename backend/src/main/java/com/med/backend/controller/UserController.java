@@ -1,12 +1,8 @@
 package com.med.backend.controller;
 
 import com.med.backend.model.enums.Role;
-import com.med.backend.model.request.EmployeeReq;
-import com.med.backend.model.request.UserReq;
-import com.med.backend.model.response.EmployeeRes;
 import com.med.backend.model.response.UserRes;
 import com.med.backend.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

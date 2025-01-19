@@ -30,4 +30,5 @@ public class AuditLog {
     private String modifiedBy;
 
     private LocalDateTime timestamp;
+
 }

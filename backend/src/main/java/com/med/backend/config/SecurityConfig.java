@@ -30,9 +30,10 @@ public class SecurityConfig {
                     authorize
                             .requestMatchers(getOpenedResources()).permitAll()
                             .requestMatchers("/api/v1/employees/**").hasAnyRole("HR", "MANAGER", "ADMIN")
-                            .requestMatchers("/api/v1/users/**").hasRole("ADMIN");
-                    //.anyRequest().authenticated();
-                });
+                            .requestMatchers("/api/v1/users/**").hasRole("ADMIN")
+                    .anyRequest().permitAll();
+                })
+                .httpBasic(AbstractHttpConfigurer::disable);
         return http.build();
     }
 

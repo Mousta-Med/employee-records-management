@@ -6,6 +6,7 @@ import com.med.backend.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,7 +40,6 @@ public class EmployeeController {
     public ResponseEntity<EmployeeRes> update(@PathVariable UUID id, @RequestBody @Valid EmployeeReq userDto) {
         return ResponseEntity.ok(employeeService.update(id, userDto));
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") UUID id) {

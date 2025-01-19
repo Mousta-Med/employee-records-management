@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: #jdbc:oracle:thin:@localhost:1521/youmanager
-    username: #admin
-    password: #admin
+    url: jdbc:oracle:thin:@localhost:1521/youmanager
+    username: admin
+    password: admin
   jpa:
     hibernate:
       ddl-auto: update

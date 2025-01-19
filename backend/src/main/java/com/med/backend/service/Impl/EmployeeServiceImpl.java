@@ -17,29 +17,36 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final ModelMapper modelMapper;
-    private final AuditLogRepository auditLogRepository;
+    @Autowired
+    ModelMapper modelMapper;
+
+    @Autowired
+    AuditLogRepository auditLogRepository;
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public EmployeeServiceImpl(ModelMapper modelMapper, AuditLogRepository auditLogRepository) {
-        this.modelMapper = modelMapper;
-        this.auditLogRepository = auditLogRepository;
-    }
 
     @Override
     public void setAuditLog(String action, UUID id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username;
+        if (authentication == null) {
+            username = "anonymous";
+        }else {
+            username = authentication.getName();
+        }
         AuditLog auditLog = AuditLog.builder()
                 .employeeId(id)
                 .action(action)
-                .modifiedBy(authentication.getName())
+                .modifiedBy(username)
                 .timestamp(LocalDateTime.now())
                 .build();
         auditLogRepository.save(auditLog);
