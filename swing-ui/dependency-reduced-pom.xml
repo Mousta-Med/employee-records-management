@@ -12,7 +12,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.med.ui.EmployeeForm</mainClass>
+              <mainClass>com.med.ui.SwingUI</mainClass>
             </manifest>
           </archive>
         </configuration>

@@ -1,5 +1,6 @@
 package com.med.backend.controller;
 
+import com.med.backend.model.entity.User;
 import com.med.backend.model.enums.Role;
 import com.med.backend.model.response.UserRes;
 import com.med.backend.service.UserService;
@@ -36,12 +37,13 @@ public class UserController {
     }
 
     @PostMapping("/auth/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "Login successful for user: " + username;
+        User user = (User) authentication.getPrincipal();
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/auth/logout")
