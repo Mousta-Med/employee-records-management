@@ -30,6 +30,8 @@ services:
     stdin_open: true
     tty: true
   swing-ui:
+    restart:
+      unless-stopped
     build: ./swing-ui # Path to your Swing UI Dockerfile
     container_name: swing-ui
     depends_on:

@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,10 +36,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void setAuditLog(String action, UUID id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        AuditLog auditLog = new AuditLog();
-        auditLog.setEmployeeId(id);
-        auditLog.setAction(action);
-        auditLog.setModifiedBy(authentication.getName());
+        AuditLog auditLog = AuditLog.builder()
+                .employeeId(id)
+                .action(action)
+                .modifiedBy(authentication.getName())
+                .timestamp(LocalDateTime.now())
+                .build();
         auditLogRepository.save(auditLog);
     }
 
