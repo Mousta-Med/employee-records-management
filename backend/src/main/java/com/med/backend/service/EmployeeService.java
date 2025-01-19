@@ -1,6 +1,5 @@
 package com.med.backend.service;
 
-import com.med.backend.model.entity.AuditLog;
 import com.med.backend.model.request.EmployeeReq;
 import com.med.backend.model.response.EmployeeRes;
 

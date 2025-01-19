@@ -16,8 +16,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class AuditLogReq {
 
-    private UUID id;
-
     @NotNull(message = "employee id Should Not Be Null")
     private UUID employeeId;
 

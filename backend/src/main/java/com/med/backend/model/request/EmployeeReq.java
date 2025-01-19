@@ -9,15 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeReq {
-
-    private UUID id;
 
     @NotBlank(message = "name should be not blank")
     private String fullName;
