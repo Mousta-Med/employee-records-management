@@ -58,6 +58,7 @@ public class SecurityConfig {
     private String[] getOpenedResources() {
         return new String[]{
                 "/api/v1/**",
+                "/**",
                 "/api/v1/user/auth/**",
                 "/swagger-ui/**",
                 "/swagger-resources/**",
