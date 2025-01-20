@@ -32,14 +32,14 @@ services:
   swing-ui:
     restart:
       unless-stopped
-    build: ./swing-ui # Path to your Swing UI Dockerfile
+    build: ./swing-ui
     container_name: swing-ui
     depends_on:
       - backend
     environment:
       BACKEND_API_URL: "http://backend:8080"
-      DISPLAY: "host.docker.internal:0.0" # Set DISPLAY variable for X11
+      DISPLAY: "host.docker.internal:0.0"
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix # Share X11 socket for communication
+      - /tmp/.X11-unix:/tmp/.X11-unix
     stdin_open: true
     tty: true
